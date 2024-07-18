@@ -16,7 +16,7 @@ const UpdateTaskForm = ({ setIsUpdate, task }) => {
                 onClick={() => setIsUpdate(false)}
               />
             </div>
-            <TaskForm task={task}/>
+            <TaskForm task={task} setIsUpdate={setIsUpdate}/>
           </div>
         </div>
       </div>

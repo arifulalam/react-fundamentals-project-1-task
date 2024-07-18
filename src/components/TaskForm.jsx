@@ -3,11 +3,11 @@
 import React, { useRef, useState } from "react";
 import { v4 as uuid } from "uuid";
 import { useDispatch } from "react-redux";
-import addTask, { updateTask } from "../features/TaskSlice";
+import {addTask, updateTask } from "../features/TaskSlice";
 import { ToastContainer, toast } from "react-toastify";
 import validator from "validator";
 
-const TaskForm = ({ task = null }) => {
+const TaskForm = ({ task = null, setIsUpdate }) => {
   const nameRef = useRef();
   const titleRef = useRef();
   const descriptionRef = useRef();
@@ -33,7 +33,7 @@ const TaskForm = ({ task = null }) => {
     setDescription(() => e.target.value);
   };
 
-  const submit = (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
 
     if (validator.isEmpty(name)) {
@@ -70,6 +70,8 @@ const TaskForm = ({ task = null }) => {
       setTitle("");
       setDescription("");
       toast.success("Task added successfully.");
+
+      setIsUpdate(false);
     }
   };
 
@@ -129,7 +131,7 @@ const TaskForm = ({ task = null }) => {
 
         <button
           type="submit"
-          onClick={submit}
+          onClick={handleSubmit}
           disabled={disable}
           className="px-5 py-3 bg-slate-950 text-white font-bold disabled:bg-slate-500 cursor-pointer disabled:text-gray-900 disabled:cursor-not-allowed"
         >
