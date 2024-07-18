@@ -1,33 +1,39 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
+/* eslint-disable no-unused-vars */
+import React, { useState } from 'react'
 import './App.css'
+import {
+  createBrowserRouter,
+  createRoutesFromElements,
+  Route,
+  RouterProvider,
+} from "react-router-dom";
+import NabBar from './components/navbar'
+import Home from './pages/Home'
+import Contact from './pages/Contact'
+import TaskViewer from './pages/TaskViewer'
+
+import { Helmet, HelmetProvider } from "react-helmet-async";
+import "react-toastify/dist/ReactToastify.css";
+import MasterPage from './layout/MasterPage';
 
 function App() {
-  const [count, setCount] = useState(0)
+  const router = createBrowserRouter(
+    createRoutesFromElements(
+      <Route>
+        <Route element={<MasterPage/>}>
+          <Route path="/" element={<Home />}></Route>
+          <Route path="/contact" element={<Contact />}></Route>
+          <Route path="/tasks" element={<TaskViewer />}></Route>
+        </Route>
+      </Route>
+    )
+  );
 
   return (
     <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
+      <HelmetProvider>
+        <RouterProvider router={router} />
+      </HelmetProvider>
     </>
   )
 }
